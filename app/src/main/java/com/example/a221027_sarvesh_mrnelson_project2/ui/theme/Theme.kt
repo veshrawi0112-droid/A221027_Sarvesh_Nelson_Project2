@@ -1,4 +1,4 @@
-package com.example.a221027_sarvesh_mrnelson_project1.ui.theme
+package com.example.a221027_sarvesh_mrnelson_project2.ui.theme
 
 
 import android.os.Build

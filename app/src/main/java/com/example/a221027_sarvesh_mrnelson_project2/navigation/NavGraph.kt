@@ -1,10 +1,10 @@
-package com.example.a221027_sarvesh_mrnelson_project1.navigation
+package com.example.a221027_sarvesh_mrnelson_project2.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.*
-import com.example.a221027_sarvesh_mrnelson_project1.ui.screens.*
-import com.example.a221027_sarvesh_mrnelson_project1.viewmodel.MainViewModel
+import com.example.a221027_sarvesh_mrnelson_project2.ui.screens.*
+import com.example.a221027_sarvesh_mrnelson_project2.viewmodel.MainViewModel
 
 @Composable
 fun AppNavigation() {
@@ -19,7 +19,7 @@ fun AppNavigation() {
 
         // LOGIN SCREEN
         composable("login") {
-            LoginScreen(navController)
+            LoginScreen(navController, viewModel)
         }
 
         // REGISTER SCREEN
@@ -29,7 +29,16 @@ fun AppNavigation() {
 
         // HOME SCREEN
         composable("home") {
-            HomeScreen(navController)
+            HomeScreen(
+                navController,
+                viewModel
+            )
+        }
+        composable("nearby") {
+            NearbyDonationsScreen(
+                navController,
+                viewModel
+            )
         }
 
         // DONATION FORM SCREEN
