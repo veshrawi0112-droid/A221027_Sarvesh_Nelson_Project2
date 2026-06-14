@@ -32,6 +32,9 @@ import com.example.a221027_sarvesh_mrnelson_project2.data.location.LocationHelpe
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.LaunchedEffect
+import android.content.Intent
+import android.net.Uri
+import androidx.compose.ui.platform.LocalContext
 // ---------------- LOGIN SCREEN ----------------
 
 @Composable
@@ -257,7 +260,7 @@ fun HomeScreen(
                         modifier = Modifier.fillMaxWidth()
                     ) {
 
-                        Text("Search API")
+                        Text("Search Food")
 
                     }
 
@@ -280,6 +283,12 @@ fun HomeScreen(
                         viewModel.apiResults.forEach { meal ->
 
                             Card(
+                                onClick = {
+
+                                    viewModel.selectedFood.value = meal
+
+                                    navController.navigate("form")
+                                },
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(vertical = 4.dp)
@@ -289,7 +298,6 @@ fun HomeScreen(
                                     text = meal,
                                     modifier = Modifier.padding(16.dp)
                                 )
-
                             }
                         }
                     }
@@ -578,6 +586,14 @@ fun FoodFormScreen(
 ) {
 
     val context = LocalContext.current
+    LaunchedEffect(viewModel.selectedFood.value) {
+
+        if (viewModel.selectedFood.value.isNotBlank()) {
+
+            viewModel.foodNameInput.value =
+                viewModel.selectedFood.value
+        }
+    }
 
     val locationHelper = LocationHelper(context)
 
@@ -855,6 +871,8 @@ fun NearbyDonationsScreen(
     viewModel: MainViewModel
 ) {
 
+    val context = LocalContext.current
+
     LaunchedEffect(Unit) {
         viewModel.loadDonations()
     }
@@ -912,6 +930,39 @@ fun NearbyDonationsScreen(
                         Text(
                             text = "Location: ${donation.location}"
                         )
+
+                        Spacer(
+                            modifier = Modifier.height(12.dp)
+                        )
+
+                        Row {
+
+
+
+                            Spacer(
+                                modifier = Modifier.width(8.dp)
+                            )
+
+                            Button(
+                                onClick = {
+
+                                    val uri = Uri.parse(
+                                        "geo:0,0?q=${donation.location}"
+                                    )
+
+                                    val intent = Intent(
+                                        Intent.ACTION_VIEW,
+                                        uri
+                                    )
+
+                                    context.startActivity(
+                                        intent
+                                    )
+                                }
+                            ) {
+                                Text("View On Map")
+                            }
+                        }
                     }
                 }
             }

@@ -54,6 +54,7 @@ class MainViewModel(
 
     var apiResults = mutableStateListOf<String>()
         private set
+    var selectedFood = mutableStateOf("")
 
     // ==================================================
     // FIREBASE DONATION LIST
